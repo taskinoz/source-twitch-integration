@@ -1,0 +1,27 @@
+{
+  "name": "titanfall-twitch-integration",
+  "version": "1.0.0",
+  "description": "Using Twitch chat and Icepick to dynamically change the gameplay in Titanfall 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/taskinoz/titanfall-twitch-integration.git"
+  },
+  "keywords": [
+    "twitch",
+    "titanfall",
+    "gaming"
+  ],
+  "author": "taskinoz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/taskinoz/titanfall-twitch-integration/issues"
+  },
+  "homepage": "https://gitlab.com/taskinoz/titanfall-twitch-integration#readme",
+  "devDependencies": {
+    "twitch-bot": "^1.2.5"
+  }
+}
