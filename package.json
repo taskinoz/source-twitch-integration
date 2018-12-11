@@ -22,6 +22,7 @@
   },
   "homepage": "https://gitlab.com/taskinoz/titanfall-twitch-integration#readme",
   "devDependencies": {
+    "node-key-sender": "^1.0.10",
     "twitch-bot": "^1.2.5"
   }
 }
