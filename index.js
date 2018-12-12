@@ -1,6 +1,8 @@
-const TwitchBot = require('twitch-bot'); //https://github.com/kritzware/twitch-bot
+const TwitchBot = require('twitch-bot'); // https://github.com/kritzware/twitch-bot
 const Login = require('./twitch-login.js');
-const ks = require('node-key-sender'); //https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+const ks = require('node-key-sender'); // https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+const fs = require('fs');
+const pipe = '\\\\.\\pipe\\TTF2SDK'; // Titanfall Pipe
 
 
 //Login Info
@@ -22,6 +24,15 @@ const Commands = {
   difficultyMaster: ['sp_difficulty 3', 'Master Difficulty']
 }
 
+// https://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
+// ------------------
+var randomProperty = function (obj) {
+    var keys = Object.keys(obj)
+    return obj[keys[ keys.length * Math.random() << 0]];
+    //Commands[keys[1]]
+};
+// ------------------
+
 // FOV SCALE
 // 1.55 - 110
 // 1.42003 - 100
@@ -35,6 +46,20 @@ function generateCommands() {
   Bot.say("!3 - "+Commands.highGravity[1]);
 }
 
+// Run a command in Titanfall
+function generalCmd(a) {
+  fs.writeFileSync(pipe, 'CGetLocalClientPlayer().ClientCommand("'+a+'")');
+}
+
+// The same as generalCmd but adds a + and a - to
+// start and stop a movement command
+function movementCmd(a) {
+  fs.writeFileSync(pipe, 'CGetLocalClientPlayer().ClientCommand("+'+a+'")');
+  setTimeout(function () {
+    fs.writeFileSync(pipe, 'CGetLocalClientPlayer().ClientCommand("-'+a+'")');
+  }, 1000)
+}
+
 Bot.on('join', () => {
 
   Bot.on('message', chatter => {
@@ -44,15 +69,15 @@ Bot.on('join', () => {
       switch (chatter.message) {
         case '!1':
           Bot.say("You have chosen 1");
-          ks.sendKey('equals');
+          generalCmd(Commands.lowGravity);
           break;
         case '!2':
           Bot.say("You have chosen 2");
-          ks.sendKey('space');
+          generalCmd(Commands.regularGravity);
           break;
         case '!3':
           Bot.say("You have chosen 3");
-          ks.sendKey('q');
+          generalCmd(Commands.highGravity);
           break;
         default:
           Bot.say("Sorry that isn't a command");
