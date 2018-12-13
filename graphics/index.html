@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Voting Graphs</title>
+  <style>
+    html{
+      height: 100%;
+      width: 100%;
+    }
+    body{
+      border:0;
+      margin: 0;
+      padding: 0;
+      font-family: Arial;
+      color: #fff;
+    }
+    .voting-area{
+      font-size: 0;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 40px 0;
+      text-align: right;
+    }
+    .vote{
+      display: inline-block;
+      width: calc((100% / 2) / 3);
+      text-align: center;
+    }
+    .vote h2{
+      font-size: 40px;
+      margin: 0;
+    }
+    .vote span{
+      font-size: 40px;
+    }
+    .timer{
+      width: 100%;
+    }
+    .bar{
+      width: 100%;
+      height: 20px;
+      background: rgba(255,0,0,0.5);
+      display: inline-block;
+    }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    setInterval(function functionName() {
+      $.get('/ajax', function(res) {
+        $('.vote1').text(vote1);
+        $('.vote2').text(vote2);
+        $('.vote3').text(vote3);
+      });
+    },1000)
+  });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="voting-area">
+      <div id="vote1" class="vote">
+        <h2>Low Gravity</h2>
+        <p><span class="votes">15</span></p>
+      </div>
+      <div id="vote2" class="vote">
+        <h2>Inverted</h2>
+        <p><span class="votes">2</span></p>
+      </div>
+      <div id="vote3" class="vote">
+        <h2>Low FOV</h2>
+        <p><span class="votes">100</span></p>
+      </div>
+    </div>
+    <div class="timer">
+      <div class="bar"></div>
+    </div>
+  </div>
+</body>
+</html>
