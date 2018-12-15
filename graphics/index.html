@@ -20,33 +20,57 @@
     .voting-area{
       font-size: 0;
       background: rgba(0, 0, 0, 0.5);
-      padding: 40px 0;
       text-align: right;
+      border-bottom: 4px solid rgba(255,255,255,0.6);
     }
     .vote{
       display: inline-block;
-      width: calc((100% / 2) / 3);
+      width: calc((100% / 3 ) / 2);
       text-align: center;
+      padding: 20px 0;
+      margin: 0 10px;
+      border-right: 4px solid #fff;
     }
-    .vote h2{
-      font-size: 40px;
+    .vote:last-child{
+      border: 0;
+    }
+    .vote-title{
       margin: 0;
+      display: inline-block;
+      float: left;
     }
-    .vote span{
-      font-size: 40px;
+    .votes{
+      display: inline-block;
+      float: right;
+    }
+    .vote-title,
+    .votes{
+      /* width: 50%; */
+      display: inline-block;
+      text-align: center;
+      padding: 0 20px;
+      font-size: 30px;
+      text-transform: uppercase;
     }
     .timer{
       width: 100%;
     }
     .bar{
-      width: 100%;
+      width: calc(100% - 4px * 2);
       height: 20px;
-      background: rgba(255,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       display: inline-block;
+      border: 4px solid rgba(255,255,255,0.6);
+      border-top: 0;
+      animation: timer linear 10s infinite;
+    }
+    @keyframes timer {
+      from{width: calc(100% - 4px * 2);}
+      to{width: 0;}
     }
   </style>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
   $(document).ready(function() {
     setInterval(function functionName() {
       $.get('/ajax', function(res) {
@@ -56,22 +80,22 @@
       });
     },1000)
   });
-  </script>
+  </script> -->
 </head>
 <body>
   <div class="container">
     <div class="voting-area">
       <div id="vote1" class="vote">
-        <h2>Low Gravity</h2>
-        <p><span class="votes">15</span></p>
+        <div class="vote-title">Low Gravity</div>
+        <div class="votes">15</div>
       </div>
       <div id="vote2" class="vote">
-        <h2>Inverted</h2>
-        <p><span class="votes">2</span></p>
+        <div class="vote-title">Inverted</div>
+        <div class="votes">2</div>
       </div>
       <div id="vote3" class="vote">
-        <h2>Low FOV</h2>
-        <p><span class="votes">100</span></p>
+        <div class="vote-title">Low FOV</div>
+        <div class="votes">100</div>
       </div>
     </div>
     <div class="timer">
