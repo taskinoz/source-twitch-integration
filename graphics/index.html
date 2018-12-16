@@ -70,17 +70,18 @@
     }
   </style>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <!-- <script type="text/javascript">
+  <script type="text/javascript">
   $(document).ready(function() {
     setInterval(function functionName() {
-      $.get('/ajax', function(res) {
-        $('.vote1').text(vote1);
-        $('.vote2').text(vote2);
-        $('.vote3').text(vote3);
+      $.get('/getstring', function(res) {
+        console.log(res);
+        // $('.vote1').text(vote1);
+        // $('.vote2').text(vote2);
+        // $('.vote3').text(vote3);
       });
     },1000)
   });
-  </script> -->
+  </script>
 </head>
 <body>
   <div class="container">
