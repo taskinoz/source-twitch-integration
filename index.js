@@ -5,6 +5,7 @@ const Login = require('./twitch-login.js');
 const ks = require('node-key-sender'); // https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 const fs = require('fs');
 var http = require('http');
+var url = require('url');
 const pipe = '\\\\.\\pipe\\TTF2SDK'; // Titanfall Pipe
 // ------------------------------------------------------
 
@@ -61,13 +62,6 @@ var x;
 
 // FUNCTIONS
 // ------------------------------------------------------
-// https://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
-//var randomProperty = function (obj) {
-//var keys = Object.keys(obj)
-//return obj[keys[ keys.length * Math.random() << 0]];
-//Commands[keys[1]]
-//};
-
 // Runs through the Commands object and picks 3 random ones
 function generateCommands() {
   for (let i = 0; i < 3; i++) {
@@ -159,15 +153,38 @@ function endVoting() {
 // ------------------------------------------------------
 // https://stackoverflow.com/questions/6011984/basic-ajax-send-receive-with-node-js
 // https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/
-const server = http.createServer();
-server.on('request', (request, response) => {
-  // the same kind of magic happens here!
-});
+
+http.createServer(function(request, response){
+  var path = url.parse(request.url).pathname;
+  if(path=="/getstring"){
+    console.log("request recieved");
+    var string = {
+      test: 'test'
+    };
+    var json = JSON.stringify(string);
+    console.log("string '" + string + "' chosen");
+    response.writeHead(200, {'content-type':'application/json'});
+    response.end(json);
+    console.log("string sent");
+  }
+  else{
+    // Write the HTML file to the server
+    fs.readFile('graphics/index.html', function(err, file) {
+      if(err) {
+        // write an error response or nothing here
+        return;
+      }
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(file, "utf-8");
+    });
+  }
+}).listen(8001);
+console.log("server initialized");
 // ------------------------------------------------------
 
 
 Bot.on('join', () => {
-  startVoting();
+  //startVoting();
   Bot.on('message', chatter => {
 
     // Look for a command
