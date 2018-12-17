@@ -2,8 +2,6 @@
 // ------------------------------------------------------
 const TwitchBot = require('twitch-bot'); // https://github.com/kritzware/twitch-bot
 const Login = require('./twitch-login.js');
-const ks = require('node-key-sender'); // https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
-const fs = require('fs');
 var http = require('http');
 var url = require('url');
 const pipe = '\\\\.\\pipe\\TTF2SDK'; // Titanfall Pipe
@@ -26,7 +24,7 @@ const Commands = {
   regularGravity: ['sv_gravity 750','Regular Gravity'],
   highGravity: ['sv_gravity 900','High Gravity'],
   inverted: ['m_invert_pitch 1','Inverted'],
-  fov: ['cl_fovScale 1', 'Change FOV'],
+  lowFOV: ['cl_fovScale 1', 'Change FOV'],
   difficultyEasy: ['sp_difficulty 0', 'Easy Difficulty'],
   difficultyRegular: ['sp_difficulty 1', 'Regular Difficulty'],
   difficultyHard: ['sp_difficulty 2', 'Hard Difficulty'],
@@ -50,7 +48,7 @@ const Commands = {
 
 // FLAGS AND VARIABLES
 // ------------------------------------------------------
-var voting = true;
+var voting = false;
 var votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
 var voteStor = []; // Current vote storage
 var winning;
@@ -58,6 +56,8 @@ var temp = [];
 var tempCounting = [];
 const keys = Object.keys(Commands);
 var x;
+var votingTime = 60; // Seconds
+var playTime = 60; // Seconds
 // ------------------------------------------------------
 
 // FUNCTIONS
@@ -105,12 +105,12 @@ function compareVotes(x,y,z) {
     if (tempCounting[i]==Math.max(x,y,z)){
       // Futureproofing for using movement commands like +jump
       if ((voteStor[i][0]).includes("+") || (voteStor[i][0]).includes("-")){
-        //movementCmd(Commands[keys[temp[i]]][0]);
+        movementCmd(Commands[keys[temp[i]]][0]);
         winning = voteStor[i][1];
         return voteStor[i][1];
       }
       else {
-        //generalCmd(Commands[keys[temp[i]]][0]);
+        generalCmd(Commands[keys[temp[i]]][0]);
         winning = voteStor[i][1];
         return voteStor[i][1];
       }
@@ -125,27 +125,28 @@ function reset() {
   voteStor=[];
   tempCounting = [];
   votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
-  //generalCmd(Commands.reset);
+  generalCmd(Commands.reset);
 }
 
 function startVoting() {
+  voting = true;
   console.log("Voting starts now");
   generateCommands();
   sayCommands();
 
   setTimeout(function () {
     endVoting();
-  },10000);
+  },votingTime*1000);
 }
 
 function endVoting() {
+  voting = false;
   compareVotes(votes1,votes2,votes3);
   Bot.say(winning+" won with "+Math.max(votes1,votes2,votes3)+" votes");
-
   setTimeout(function () {
     reset();
     startVoting();
-  },10000);
+  },playTime*1000);
 }
 // ------------------------------------------------------
 
@@ -158,13 +159,32 @@ http.createServer(function(request, response){
   var path = url.parse(request.url).pathname;
   if(path=="/getstring"){
     console.log("request recieved");
-    var string = {
-      test: 'test'
-    };
-    var json = JSON.stringify(string);
-    console.log("string '" + string + "' chosen");
-    response.writeHead(200, {'content-type':'application/json'});
-    response.end(json);
+    if (voting){
+      var obsGraphics = {
+        vote1: [voteStor[0][1],votes1],
+        vote2: [voteStor[1][1],votes2],
+        vote3: [voteStor[2][1],votes3],
+        winning: winning
+      };
+    }
+    else if (voting==false && winning) {
+      var obsGraphics = {
+        winning: winning
+      };
+    }
+    else {
+      var obsGraphics = {
+        // Dummy Variables
+        vote1: ['loading...','0'],
+        vote2: ['loading...','0'],
+        vote3: ['loading...','0'],
+        winning: ''
+      };
+    }
+    var obsGraphicsJson = JSON.stringify(obsGraphics);
+    //console.log("string '" + obsGraphicsJson + "' chosen");
+    response.writeHead(200, {'content-type':'application/json','Content-Length' : Buffer.byteLength(obsGraphicsJson, 'utf8')});
+    response.end(obsGraphicsJson);
     console.log("string sent");
   }
   else{
@@ -184,7 +204,7 @@ console.log("server initialized");
 
 
 Bot.on('join', () => {
-  //startVoting();
+  startVoting();
   Bot.on('message', chatter => {
 
     // Look for a command
