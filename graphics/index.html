@@ -23,28 +23,45 @@
       text-align: right;
       border-bottom: 4px solid rgba(255,255,255,0.6);
     }
-    .vote{
+    .vote,
+    .win{
       display: inline-block;
-      width: calc((100% / 3 ) / 2);
+      /* width: calc((100% / 3 ) / 2); */
       text-align: center;
       padding: 20px 0;
       margin: 0 10px;
-      border-right: 4px solid #fff;
+      border-left: 4px solid #fff;
     }
-    .vote:last-child{
+    .win{
+      display: none;
+      width: unset;
+      text-align: right;
+    }
+    .vote:first-child,
+    .win{
       border: 0;
     }
-    .vote-title{
+    .vote-title,
+    .winner-title{
       margin: 0;
       display: inline-block;
       float: left;
     }
-    .votes{
+    .votes,
+    .winner{
       display: inline-block;
       float: right;
     }
+    .winner::before{
+      content: "|";
+      margin-right: 40px;
+      position: relative;
+      top: -4px;
+    }
     .vote-title,
-    .votes{
+    .votes,
+    .winner-title,
+    .winner{
       /* width: 50%; */
       display: inline-block;
       text-align: center;
@@ -62,24 +79,64 @@
       display: inline-block;
       border: 4px solid rgba(255,255,255,0.6);
       border-top: 0;
-      animation: timer linear 10s infinite;
+    }
+    .timer-animation{
+      animation: timer linear 60s infinite;
     }
     @keyframes timer {
       from{width: calc(100% - 4px * 2);}
       to{width: 0;}
     }
   </style>
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="../config.js" charset="utf-8"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
   <script type="text/javascript">
   $(document).ready(function() {
-    setInterval(function functionName() {
-      $.get('/getstring', function(res) {
-        console.log(res);
-        // $('.vote1').text(vote1);
-        // $('.vote2').text(vote2);
-        // $('.vote3').text(vote3);
-      });
-    },1000)
+    var votes;
+    var g=new Date();
+    function obsData() {
+      // votes = {
+      //   vote1: ['Inverted','82'],
+      //   vote2: ['Easy Difficulty','18'],
+      //   vote3: ['Slowmo','22'],
+      //   winning: 'Inverted'
+      // };
+
+    };
+    function getData(){
+       xmlhttp = new XMLHttpRequest();
+       xmlhttp.open("GET","http://localhost:8001/getstring?"+g.getSeconds(), true);
+       xmlhttp.onreadystatechange=function(){
+         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+           votes=JSON.parse(xmlhttp.responseText);
+           if (votes.winning) {
+             $('.win').css('display','inline-block');
+             $('.vote').hide().css('border','0');
+             $('.timer').hide().css('animation','none');
+             $('#winner .winner').text(votes.winning);
+           }
+           else {
+             $('.win').hide();
+             $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
+             $('.timer').css({'display':'inline-block','animation': 'timer linear 60s infinite'});
+             $('#vote1 .vote-title').text(votes.vote1[0]);
+             $('#vote1 .votes').text(votes.vote1[1]);
+             $('#vote2 .vote-title').text(votes.vote2[0]);
+             $('#vote2 .votes').text(votes.vote2[1]);
+             $('#vote3 .vote-title').text(votes.vote3[0]);
+             $('#vote3 .votes').text(votes.vote3[1]);
+           }
+         }
+       }
+       xmlhttp.send();
+    }
+    setInterval(function () {
+      getData();
+    },1000);
+    getData()
   });
   </script>
 </head>
@@ -87,16 +144,20 @@
   <div class="container">
     <div class="voting-area">
       <div id="vote1" class="vote">
-        <div class="vote-title">Low Gravity</div>
-        <div class="votes">15</div>
+        <div class="vote-title">loading...</div>
+        <div class="votes">0</div>
       </div>
       <div id="vote2" class="vote">
-        <div class="vote-title">Inverted</div>
-        <div class="votes">2</div>
+        <div class="vote-title">loading...</div>
+        <div class="votes">0</div>
       </div>
       <div id="vote3" class="vote">
-        <div class="vote-title">Low FOV</div>
-        <div class="votes">100</div>
+        <div class="vote-title">loading...</div>
+        <div class="votes">0</div>
+      </div>
+      <div id="winner" class="win">
+        <div class="winner-title">Winner</div>
+        <div class="winner">loading...</div>
       </div>
     </div>
     <div class="timer">
