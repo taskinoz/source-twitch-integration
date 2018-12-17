@@ -24,7 +24,6 @@
   "devDependencies": {
     "fs": "0.0.1-security",
     "http": "0.0.0",
-    "node-key-sender": "^1.0.10",
     "twitch-bot": "^1.2.5",
     "url": "^0.11.0"
   }
