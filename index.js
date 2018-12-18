@@ -1,10 +1,12 @@
 // LIBRARY IMPORTS
 // ------------------------------------------------------
 const TwitchBot = require('twitch-bot'); // https://github.com/kritzware/twitch-bot
-const Login = require('./twitch-login.js');
+var fs = require('fs');
 var http = require('http');
 var url = require('url');
 const pipe = '\\\\.\\pipe\\TTF2SDK'; // Titanfall Pipe
+const Login = JSON.parse(fs.readFileSync('twitch-login.json', 'utf8'));
+const Config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 // ------------------------------------------------------
 
 //TWITCH CONFIG
@@ -21,16 +23,14 @@ const Bot = new TwitchBot({
 // ------------------------------------------------------
 const Commands = {
   lowGravity: ['sv_gravity 300','Low Gravity'],
-  regularGravity: ['sv_gravity 750','Regular Gravity'],
-  highGravity: ['sv_gravity 900','High Gravity'],
+  highGravity: ['sv_gravity 1050','High Gravity'],
   inverted: ['m_invert_pitch 1','Inverted'],
   lowFOV: ['cl_fovScale 1', 'Change FOV'],
-  difficultyEasy: ['sp_difficulty 0', 'Easy Difficulty'],
   difficultyRegular: ['sp_difficulty 1', 'Regular Difficulty'],
   difficultyHard: ['sp_difficulty 2', 'Hard Difficulty'],
   difficultyMaster: ['sp_difficulty 3', 'Master Difficulty'],
   lastCheckpoint: ['load savegame', 'Load Last Checkpoint'],
-  restartLevel: ['reload', 'Restart Level'],
+  //restartLevel: ['reload', 'Restart Level'],
   slowmoSpeed: ['host_timescale 0.5', 'Slowmo'],
   doubleSpeed: ['host_timescale 2', 'Fast Forward'],
   turboSpeed: ['host_timescale 5', 'Turbo Speed'],
@@ -56,8 +56,6 @@ var temp = [];
 var tempCounting = [];
 const keys = Object.keys(Commands);
 var x;
-var votingTime = 60; // Seconds
-var playTime = 60; // Seconds
 // ------------------------------------------------------
 
 // FUNCTIONS
@@ -136,7 +134,7 @@ function startVoting() {
 
   setTimeout(function () {
     endVoting();
-  },votingTime*1000);
+  },Config.votingTime*1000);
 }
 
 function endVoting() {
@@ -146,7 +144,7 @@ function endVoting() {
   setTimeout(function () {
     reset();
     startVoting();
-  },playTime*1000);
+  },Config.playTime*1000);
 }
 // ------------------------------------------------------
 
