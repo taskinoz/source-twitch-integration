@@ -88,7 +88,6 @@
       to{width: 0;}
     }
   </style>
-  <script src="../config.js" charset="utf-8"></script>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -97,41 +96,32 @@
   $(document).ready(function() {
     var votes;
     var g=new Date();
-    function obsData() {
-      // votes = {
-      //   vote1: ['Inverted','82'],
-      //   vote2: ['Easy Difficulty','18'],
-      //   vote3: ['Slowmo','22'],
-      //   winning: 'Inverted'
-      // };
-
-    };
     function getData(){
-       xmlhttp = new XMLHttpRequest();
-       xmlhttp.open("GET","http://localhost:8001/getstring?"+g.getSeconds(), true);
-       xmlhttp.onreadystatechange=function(){
-         if (xmlhttp.readyState==4 && xmlhttp.status==200){
-           votes=JSON.parse(xmlhttp.responseText);
-           if (votes.winning) {
-             $('.win').css('display','inline-block');
-             $('.vote').hide().css('border','0');
-             $('.timer').hide().css('animation','none');
-             $('#winner .winner').text(votes.winning);
-           }
-           else {
-             $('.win').hide();
-             $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
-             $('.timer').css({'display':'inline-block','animation': 'timer linear 60s infinite'});
-             $('#vote1 .vote-title').text(votes.vote1[0]);
-             $('#vote1 .votes').text(votes.vote1[1]);
-             $('#vote2 .vote-title').text(votes.vote2[0]);
-             $('#vote2 .votes').text(votes.vote2[1]);
-             $('#vote3 .vote-title').text(votes.vote3[0]);
-             $('#vote3 .votes').text(votes.vote3[1]);
-           }
-         }
-       }
-       xmlhttp.send();
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET","http://localhost:8001/getstring?"+g.getSeconds(), true);
+      xmlhttp.onreadystatechange=function(){
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+          votes=JSON.parse(xmlhttp.responseText);
+          if (votes.winning) {
+            $('.win').css('display','inline-block');
+            $('.vote').hide().css('border','0');
+            $('.timer').hide().css('animation','none');
+            $('#winner .winner').text(votes.winning);
+          }
+          else {
+            $('.win').hide();
+            $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
+            $('.timer').css({'display':'inline-block','animation': 'timer linear 30s infinite'});
+            $('#vote1 .vote-title').text(votes.vote1[0]);
+            $('#vote1 .votes').text(votes.vote1[1]);
+            $('#vote2 .vote-title').text(votes.vote2[0]);
+            $('#vote2 .votes').text(votes.vote2[1]);
+            $('#vote3 .vote-title').text(votes.vote3[0]);
+            $('#vote3 .votes').text(votes.vote3[1]);
+          }
+        }
+      }
+      xmlhttp.send();
     }
     setInterval(function () {
       getData();
