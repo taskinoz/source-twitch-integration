@@ -116,6 +116,20 @@ function compareVotes(x,y,z) {
   }
 }
 
+function pingPongReset() {
+  if (voting) {
+    generalCmd(Commands.reset);
+    setTimeout(pongPingReset(),2000);
+  }
+}
+
+function pongPingReset() {
+  if (voting) {
+    generalCmd(Commands.reset);
+    setTimeout(pingPongReset(),2000);
+  }
+}
+
 // Reset all the variables
 function reset() {
   temp=[];
@@ -123,11 +137,10 @@ function reset() {
   voteStor=[];
   tempCounting = [];
   votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
-  generalCmd(Commands.reset);
+  pingPongReset();
 }
 
 function startVoting() {
-  voting = true;
   console.log("Voting starts now");
   generateCommands();
   sayCommands();
@@ -142,6 +155,7 @@ function endVoting() {
   compareVotes(votes1,votes2,votes3);
   Bot.say(winning+" won with "+Math.max(votes1,votes2,votes3)+" votes");
   setTimeout(function () {
+    voting = true;
     reset();
     startVoting();
   },Config.playTime*1000);
