@@ -1,4 +1,4 @@
-<p align="center"><img src="icon\TitanfallTwitchIntegration-white.png" alt="Titanfall Twitch Integration" /></p>
+<p align="center"><img src="http://titanfall.taskinoz.com/teaser.png" alt="Titanfall Twitch Integration" /></p>
 
 # Titanfall Twitch Integration
 
