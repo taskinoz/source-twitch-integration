@@ -25,6 +25,7 @@ const Commands = {
   lowGravity: ['sv_gravity 300','Low Gravity'],
   highGravity: ['sv_gravity 1050','High Gravity'],
   inverted: ['m_invert_pitch 1','Inverted'],
+  invertedControls: ['bind s +forward; bind d +moveleft; bind a +moveright; bind w +back;','Inverted Controls'],
   lowFOV: ['cl_fovScale 1', 'Change FOV'],
   difficultyRegular: ['sp_difficulty 1', 'Regular Difficulty'],
   difficultyHard: ['sp_difficulty 2', 'Hard Difficulty'],
@@ -35,7 +36,7 @@ const Commands = {
   doubleSpeed: ['host_timescale 2', 'Fast Forward'],
   turboSpeed: ['host_timescale 5', 'Turbo Speed'],
   thirdPerson: ['thirdperson; thirdperson_mayamode 1; thirdperson_screenspace 1', 'Third Person Camera'],
-  reset: 'firstperson; thirdperson_mayamode 0; thirdperson_screenspace 0; host_timescale 1; sp_difficulty 0; m_invert_pitch 0; sv_gravity 750; cl_fovScale 1.42003'
+  reset: 'firstperson; thirdperson_mayamode 0; thirdperson_screenspace 0; host_timescale 1; sp_difficulty 0; m_invert_pitch 0; sv_gravity 750; cl_fovScale 1.42003; bind w +forward; bind a +moveleft; bind d +moveright; bind s +back;'
 };
 
 // FOV SCALE
@@ -53,6 +54,7 @@ var votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
 var voteStor = []; // Current vote storage
 var winning;
 var temp = [];
+var foo = 0;
 var tempCounting = [];
 const keys = Object.keys(Commands);
 var x;
@@ -117,16 +119,18 @@ function compareVotes(x,y,z) {
 }
 
 function pingPongReset() {
-  if (voting) {
+  if (voting && foo<3) {
     generalCmd(Commands.reset);
     setTimeout(pongPingReset(),2000);
+    foo++;
   }
 }
 
 function pongPingReset() {
-  if (voting) {
+  if (voting && foo<3) {
     generalCmd(Commands.reset);
     setTimeout(pingPongReset(),2000);
+    foo++;
   }
 }
 
@@ -137,6 +141,7 @@ function reset() {
   voteStor=[];
   tempCounting = [];
   votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
+  foo=0;
   pingPongReset();
 }
 
@@ -170,18 +175,19 @@ function endVoting() {
 http.createServer(function(request, response){
   var path = url.parse(request.url).pathname;
   if(path=="/getstring"){
-    console.log("request recieved");
     if (voting){
       var obsGraphics = {
         vote1: [voteStor[0][1],votes1],
         vote2: [voteStor[1][1],votes2],
         vote3: [voteStor[2][1],votes3],
-        winning: winning
+        winning: winning,
+        time: Config.votingTime
       };
     }
     else if (voting==false && winning) {
       var obsGraphics = {
-        winning: winning
+        winning: winning,
+        time: Config.votingTime
       };
     }
     else {
@@ -190,14 +196,13 @@ http.createServer(function(request, response){
         vote1: ['loading...','0'],
         vote2: ['loading...','0'],
         vote3: ['loading...','0'],
-        winning: ''
+        winning: '',
+        time: Config.votingTime
       };
     }
     var obsGraphicsJson = JSON.stringify(obsGraphics);
-    //console.log("string '" + obsGraphicsJson + "' chosen");
     response.writeHead(200, {'content-type':'application/json','Content-Length' : Buffer.byteLength(obsGraphicsJson, 'utf8')});
     response.end(obsGraphicsJson);
-    console.log("string sent");
   }
   else{
     // Write the HTML file to the server
@@ -210,8 +215,8 @@ http.createServer(function(request, response){
       response.end(file, "utf-8");
     });
   }
-}).listen(8001);
-console.log("server initialized");
+}).listen(7274); // ;)
+console.log("OBS Graphics Server Initialized: localhost:7274");
 // ------------------------------------------------------
 
 
@@ -225,20 +230,15 @@ Bot.on('join', () => {
         case '!1':
           //Bot.say("You have chosen 1");
           votes1++;
-          console.log("Vote 1 has "+votes1+" votes");
           break;
         case '!2':
           //Bot.say("You have chosen 2");
           votes2++;
-          console.log("Vote 2 has "+votes2+" votes");
           break;
         case '!3':
           //Bot.say("You have chosen 3");
           votes3++;
-          console.log("Vote 3 has "+votes3+" votes");
           break;
-        default:
-          Bot.say("Sorry that isn't a command");
       }
     }
   })
