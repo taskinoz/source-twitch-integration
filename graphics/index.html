@@ -94,7 +94,7 @@
   crossorigin="anonymous"></script>
   <script type="text/javascript">
   $(document).ready(function() {
-    var votes;
+    var votes,time,tmp;
     var g=new Date();
     function getData(){
       xmlhttp = new XMLHttpRequest();
@@ -102,6 +102,10 @@
       xmlhttp.onreadystatechange=function(){
         if (xmlhttp.readyState==4 && xmlhttp.status==200){
           votes=JSON.parse(xmlhttp.responseText);
+          if (tmp==false) {
+            time = votes.time;
+            tmp = true;
+          }
           if (votes.winning) {
             $('.win').css('display','inline-block');
             $('.vote').hide().css('border','0');
@@ -111,7 +115,7 @@
           else {
             $('.win').hide();
             $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
-            $('.timer').css({'display':'inline-block','animation': 'timer linear 30s infinite'});
+            $('.timer').css({'display':'inline-block','animation': 'timer linear '+time+'s infinite'});
             $('#vote1 .vote-title').text(votes.vote1[0]);
             $('#vote1 .votes').text(votes.vote1[1]);
             $('#vote2 .vote-title').text(votes.vote2[0]);
