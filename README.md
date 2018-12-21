@@ -22,7 +22,7 @@ Using Twitch chat and Icepick to dynamically change the gameplay in Titanfall 2
 - Remove the CSS unless you want to change some of the styles and colors.
 - Additionally you can check `Refresh browser when scene becomes active`
 
-![OBS Screenshot](http://titanfall.taskinoz.com/OBS.png)
+![OBS Screenshot](http://titanfall.taskinoz.com/OBSScreenshot.png)
 
 ## Bugs & Issues
 
