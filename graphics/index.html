@@ -94,17 +94,18 @@
   crossorigin="anonymous"></script>
   <script type="text/javascript">
   $(document).ready(function() {
-    var votes,time,tmp;
+    var votes,time;
+    var tmp=true;
     var g=new Date();
     function getData(){
       xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET","http://localhost:7274/getstring?"+g.getSeconds(), true);
+      xmlhttp.open("GET","/getstring?"+g.getSeconds(), true);
       xmlhttp.onreadystatechange=function(){
         if (xmlhttp.readyState==4 && xmlhttp.status==200){
           votes=JSON.parse(xmlhttp.responseText);
-          if (tmp==false) {
+          if (tmp) {
             time = votes.time;
-            tmp = true;
+            tmp = false;
           }
           if (votes.winning) {
             $('.win').css('display','inline-block');
@@ -115,6 +116,7 @@
           else {
             $('.win').hide();
             $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
+            console.log(time);
             $('.timer').css({'display':'inline-block','animation': 'timer linear '+time+'s infinite'});
             $('#vote1 .vote-title').text(votes.vote1[0]);
             $('#vote1 .votes').text(votes.vote1[1]);
