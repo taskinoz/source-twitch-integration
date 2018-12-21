@@ -1,7 +1,7 @@
 {
   "lowGravity": ["sv_gravity 300","Low Gravity"],
   "highGravity": ["sv_gravity 1050","High Gravity"],
-  "inverted": ["m_invert_pitch 1","Inverted"],
+  "inverted": ["m_invert_pitch 1","Inverted Camera"],
   "invertedControls": ["bind s +forward; bind d +moveleft; bind a +moveright; bind w +back;-back;-forward;-moveright;-moveleft;","Inverted Controls"],
   "lowFOV": ["cl_fovScale 1", "Change FOV"],
   "difficultyRegular": ["sp_difficulty 1", "Regular Difficulty"],
