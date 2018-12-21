@@ -21,24 +21,8 @@ const Bot = new TwitchBot({
 
 // TITANFALL COMMANDS
 // ------------------------------------------------------
-const Commands = {
-  lowGravity: ['sv_gravity 300','Low Gravity'],
-  highGravity: ['sv_gravity 1050','High Gravity'],
-  inverted: ['m_invert_pitch 1','Inverted'],
-  invertedControls: ['bind s +forward; bind d +moveleft; bind a +moveright; bind w +back;','Inverted Controls'],
-  lowFOV: ['cl_fovScale 1', 'Change FOV'],
-  difficultyRegular: ['sp_difficulty 1', 'Regular Difficulty'],
-  difficultyHard: ['sp_difficulty 2', 'Hard Difficulty'],
-  difficultyMaster: ['sp_difficulty 3', 'Master Difficulty'],
-  lastCheckpoint: ['load savegame', 'Load Last Checkpoint'],
-  //restartLevel: ['reload', 'Restart Level'],
-  slowmoSpeed: ['host_timescale 0.5', 'Slowmo'],
-  doubleSpeed: ['host_timescale 2', 'Fast Forward'],
-  turboSpeed: ['host_timescale 5', 'Turbo Speed'],
-  thirdPerson: ['thirdperson; thirdperson_mayamode 1; thirdperson_screenspace 1', 'Third Person Camera'],
-  reset: 'firstperson; thirdperson_mayamode 0; thirdperson_screenspace 0; host_timescale 1; sp_difficulty 0; m_invert_pitch 0; sv_gravity 750; cl_fovScale 1.42003; bind w +forward; bind a +moveleft; bind d +moveright; bind s +back;'
-};
-
+// Find the commands in the commands.json
+const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
 // FOV SCALE
 // 1.55 - 110
 // 1.42003 - 100
@@ -121,7 +105,9 @@ function compareVotes(x,y,z) {
 function pingPongReset() {
   if (voting && foo<3) {
     generalCmd(Commands.reset);
-    setTimeout(pongPingReset(),2000);
+    setTimeout(function(){
+      pongPingReset()
+    },3000);
     foo++;
   }
 }
@@ -129,7 +115,9 @@ function pingPongReset() {
 function pongPingReset() {
   if (voting && foo<3) {
     generalCmd(Commands.reset);
-    setTimeout(pingPongReset(),2000);
+    setTimeout(function(){
+      pingPongReset()
+    },3000);
     foo++;
   }
 }
@@ -142,14 +130,16 @@ function reset() {
   tempCounting = [];
   votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
   foo=0;
-  pingPongReset();
+  setTimeout(function(){
+    pingPongReset()
+  },1000);
 }
 
 function startVoting() {
+  voting = true;
   console.log("Voting starts now");
   generateCommands();
   sayCommands();
-
   setTimeout(function () {
     endVoting();
   },Config.votingTime*1000);
@@ -159,8 +149,7 @@ function endVoting() {
   voting = false;
   compareVotes(votes1,votes2,votes3);
   Bot.say(winning+" won with "+Math.max(votes1,votes2,votes3)+" votes");
-  setTimeout(function () {
-    voting = true;
+  setTimeout(function(){
     reset();
     startVoting();
   },Config.playTime*1000);
@@ -215,8 +204,8 @@ http.createServer(function(request, response){
       response.end(file, "utf-8");
     });
   }
-}).listen(7274); // ;)
-console.log("OBS Graphics Server Initialized: localhost:7274");
+}).listen(80); // ;)
+console.log("OBS Graphics Server Initialized: localhost");
 // ------------------------------------------------------
 
 

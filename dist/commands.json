@@ -1,0 +1,16 @@
+{
+  "lowGravity": ["sv_gravity 300","Low Gravity"],
+  "highGravity": ["sv_gravity 1050","High Gravity"],
+  "inverted": ["m_invert_pitch 1","Inverted"],
+  "invertedControls": ["bind s +forward; bind d +moveleft; bind a +moveright; bind w +back;-back;-forward;-moveright;-moveleft;","Inverted Controls"],
+  "lowFOV": ["cl_fovScale 1", "Change FOV"],
+  "difficultyRegular": ["sp_difficulty 1", "Regular Difficulty"],
+  "difficultyHard": ["sp_difficulty 2", "Hard Difficulty"],
+  "difficultyMaster": ["sp_difficulty 3", "Master Difficulty"],
+  "lastCheckpoint": ["load savegame", "Load Last Checkpoint"],
+  "slowmoSpeed": ["host_timescale 0.5", "Slowmo"],
+  "doubleSpeed": ["host_timescale 2", "Fast Forward"],
+  "turboSpeed": ["host_timescale 5", "Turbo Speed"],
+  "thirdPerson": ["thirdperson; thirdperson_mayamode 1; thirdperson_screenspace 1", "Third Person Camera"],
+  "reset": "firstperson; thirdperson_mayamode 0; thirdperson_screenspace 0; host_timescale 1; sp_difficulty 0; m_invert_pitch 0; sv_gravity 750; cl_fovScale 1.42003; bind w +forward; bind a +moveleft; bind d +moveright; bind s +back;-back;-forward;-moveright;-moveleft;"
+}
