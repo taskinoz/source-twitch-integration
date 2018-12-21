@@ -7,7 +7,7 @@ Using Twitch chat and Icepick to dynamically change the gameplay in Titanfall 2
 ## Installation
 
 - Download Icepick [here](https://titanfallmods.com)
-- Download the latest release of Titanfall Twitch Integration from [here](#)
+- Download the latest release of Titanfall Twitch Integration from [here](https://github.com/taskinoz/titanfall-twitch-integration/releases/)
 - Add your username, oath key and channel name to the ``twitch-login.example.json`` and rename it to ``twitch-login.json``. **Get your OATH key [here](https://twitchapps.com/tmi/)**
 - Change the voting times in ``config.json`` if needed (Default is 30s for voting and 60s for playtime)
 - Patch Icepick by moving the DLL from ``\patch\TTF2SDK.dll`` (Thanks McSimp) into the Icepick folder, replacing the `TTF2SDK.dll` that was already there
