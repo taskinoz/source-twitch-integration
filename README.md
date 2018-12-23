@@ -1,4 +1,4 @@
-<p align="center" style="text-align:center"><img width="130" height="150" src="http://titanfall.taskinoz.com/teaser.png" alt="Titanfall Twitch Integration" /></p>
+<p align="center" style="text-align:center"><img width="130" height="150" src="https://raw.githubusercontent.com/taskinoz/titanfall-twitch-integration/master/icon/TitanfallTwitchIntegration-white.png" alt="Titanfall Twitch Integration" /></p>
 
 # Titanfall Twitch Integration
 
@@ -22,7 +22,7 @@ Using Twitch chat and Icepick to dynamically change the gameplay in Titanfall 2
 - Remove the CSS unless you want to change some of the styles and colors.
 - Additionally you can check `Refresh browser when scene becomes active`
 
-![OBS Screenshot](http://titanfall.taskinoz.com/OBSScreenshot.png)
+![OBS Screenshot](https://raw.githubusercontent.com/taskinoz/titanfall-twitch-integration/master/setup/OBSScreenshot.png)
 
 ## Bugs & Issues
 
