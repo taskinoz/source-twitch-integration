@@ -1,4 +1,7 @@
 {
   "votingTime": "30",
-  "playTime":   "60"
+  "playTime":   "60",
+  "enableGifts": true,
+  "bitGiftAmount": 10,
+  "resetKey": "l"
 }
