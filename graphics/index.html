@@ -97,37 +97,36 @@
     var votes,time;
     var tmp=true;
     var g=new Date();
-    function getData(){
-      xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET","/getstring?"+g.getSeconds(), true);
-      xmlhttp.onreadystatechange=function(){
-        if (xmlhttp.readyState==4 && xmlhttp.status==200){
-          votes=JSON.parse(xmlhttp.responseText);
-          if (tmp) {
-            time = votes.time;
-            tmp = false;
-          }
-          if (votes.winning) {
-            $('.win').css('display','inline-block');
-            $('.vote').hide().css('border','0');
-            $('.timer').hide().css('animation','none');
-            $('#winner .winner').text(votes.winning);
-          }
-          else {
-            $('.win').hide();
-            $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
-            console.log(time);
-            $('.timer').css({'display':'inline-block','animation': 'timer linear '+time+'s infinite'});
-            $('#vote1 .vote-title').text(votes.vote1[0]);
-            $('#vote1 .votes').text(votes.vote1[1]);
-            $('#vote2 .vote-title').text(votes.vote2[0]);
-            $('#vote2 .votes').text(votes.vote2[1]);
-            $('#vote3 .vote-title').text(votes.vote3[0]);
-            $('#vote3 .votes').text(votes.vote3[1]);
-          }
+    function getData() {
+      $.ajax({
+        url: "/getstring?"+g.getSeconds(),
+        context: document.body,
+        votes: "data"
+      }).done(function(votes) {
+        //votes = JSON.parse(votes);
+        if (tmp) {
+          time = votes.time;
+          tmp = false;
         }
-      }
-      xmlhttp.send();
+        if (votes.winning) {
+          $('.win').css('display','inline-block');
+          $('.vote').hide().css('border','0');
+          $('.timer').hide().css('animation','none');
+          $('#winner .winner').text(votes.winning);
+        }
+        else {
+          $('.win').hide();
+          $('.vote').css({'display':'inline-block',"border-left": "4px solid #fff"});
+          console.log(time);
+          $('.timer').css({'display':'inline-block','animation': 'timer linear '+time+'s infinite'});
+          $('#vote1 .vote-title').text(votes.vote1[0]);
+          $('#vote1 .votes').text(votes.vote1[1]);
+          $('#vote2 .vote-title').text(votes.vote2[0]);
+          $('#vote2 .votes').text(votes.vote2[1]);
+          $('#vote3 .vote-title').text(votes.vote3[0]);
+          $('#vote3 .votes').text(votes.vote3[1]);
+        }
+      });
     }
     setInterval(function () {
       getData();
