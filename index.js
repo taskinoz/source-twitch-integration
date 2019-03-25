@@ -23,6 +23,16 @@ const Bot = new TwitchBot({
 // ------------------------------------------------------
 // Find the commands in the commands.json
 const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
+// Bind the reset command
+setTimeout(function() {
+  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resCMD \"${Commands.reset}\"")`)
+},100);
+setTimeout(function() {
+  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resMVM \"${Commands.resetMV}\"")`)
+},200);
+setTimeout(function() {
+  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("bind ${Config.resetKey} \"resCMD;resMVM;\"")`)
+},300);
 // FOV SCALE
 // 1.55 - 110
 // 1.42003 - 100
@@ -49,9 +59,9 @@ var x;
 // Runs through the Commands object and picks 3 random ones
 function generateCommands() {
   for (let i = 0; i < 3; i++) {
-    x=Math.floor(Math.random() * (keys.length-1));
+    x=Math.floor(Math.random() * (keys.length-2));
     do {
-      x=Math.floor(Math.random() * (keys.length-1));
+      x=Math.floor(Math.random() * (keys.length-2));
     }
     while (temp.includes(x));
     temp.push(x);
@@ -102,28 +112,28 @@ function compareVotes(x,y,z) {
   }
 }
 
-function pingPongReset() {
+function pingPongReset(c) {
   if (voting && foo<3) {
-    generalCmd(Commands.reset);
+    generalCmd(Commands["reset"+c]);
     setTimeout(function(){
-      pongPingReset()
+      pongPingReset(c)
     },3000);
     foo++;
   }
 }
 
-function pongPingReset() {
+function pongPingReset(b) {
   if (voting && foo<3) {
-    generalCmd(Commands.reset);
+    generalCmd(Commands["reset"+b]);
     setTimeout(function(){
-      pingPongReset()
+      pingPongReset(b)
     },3000);
     foo++;
   }
 }
 
 // Reset all the variables
-function reset() {
+function reset(a) {
   temp=[];
   winning="";
   voteStor=[];
@@ -131,7 +141,7 @@ function reset() {
   votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
   foo=0;
   setTimeout(function(){
-    pingPongReset()
+    pingPongReset(a)
   },1000);
 }
 
@@ -150,7 +160,8 @@ function endVoting() {
   compareVotes(votes1,votes2,votes3);
   Bot.say(winning+" won with "+Math.max(votes1,votes2,votes3)+" votes");
   setTimeout(function(){
-    reset();
+    if (winning=="invertedControls") {reset("MV");}
+    else {reset("");}
     startVoting();
   },Config.playTime*1000);
 }
