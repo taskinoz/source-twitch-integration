@@ -25,13 +25,13 @@ const Bot = new TwitchBot({
 const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
 // Bind the reset command
 setTimeout(function() {
-  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resCMD \"${Commands.reset}\"")`)
+  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resCMD ${Commands.reset}")`)
 },100);
 setTimeout(function() {
-  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resMVM \"${Commands.resetMV}\"")`)
+  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resMVM ${Commands.resetMV}")`)
 },200);
 setTimeout(function() {
-  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("bind ${Config.resetKey} \"resCMD;resMVM;\"")`)
+  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("bind ${Config.resetKey} resCMD;resMVM;")`)
 },300);
 // FOV SCALE
 // 1.55 - 110
