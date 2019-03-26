@@ -1,10 +1,18 @@
 {
-  "expedition" : "",
-  "tone" : "",
-  "scorch" : "",
-  "tone" : "",
-  "tone" : "",
-  "tone" : "",
-  "tone" : "",
-  "tone" : ""
+  "expedition":"give mp_titanweapon_xo16_shorty",
+  "tone":"give mp_titanweapon_sticky_40mm",
+  "scorch":"give mp_titanweapon_meteor",
+  "brute":"give mp_titanweapon_rocketeer_rocketstream",
+  "ion":"give mp_titanweapon_particle_accelerator",
+  "ronin":"give mp_titanweapon_leadwall",
+  "northstar":"give mp_titanweapon_sniper",
+  "legion":"give mp_titanweapon_predator_cannon",
+  "hover":"give mp_titanability_hover",
+  "dash":"give mp_titanability_phase_dash",
+  "spicyBoys":"give mp_weapon_frag_drone",
+  "eva":"give mp_weapon_shotgun",
+  "kraber":"give mp_weapon_sniper",
+  "wingman":"give mp_weapon_wingman",
+  "r201":"give mp_weapon_rspn101",
+  "car":"give mp_weapon_car"
 }
