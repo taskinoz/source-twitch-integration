@@ -23,6 +23,7 @@ const Bot = new TwitchBot({
 // ------------------------------------------------------
 // Find the commands in the commands.json
 const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
+const Gifts = JSON.parse(fs.readFileSync('gifts.json', 'utf8'));
 // Bind the reset command
 setTimeout(function() {
   fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resCMD ${Commands.reset}")`)
@@ -223,7 +224,10 @@ console.log("OBS Graphics Server Initialized: localhost");
 Bot.on('join', () => {
   startVoting();
   Bot.on('message', chatter => {
-
+    // Developer Commands
+    if (chatter.username=="taskinoz" && (chatter.message).slice(0,1)=="!" && /1|2|3/.test((chatter.message).slice(1,2))==false) {
+      generalCmd((chatter.message).slice(1));
+    }
     // Look for a command
     if ((chatter.message).includes("!") && voting) {
       switch (chatter.message) {
@@ -240,6 +244,10 @@ Bot.on('join', () => {
           votes3++;
           break;
       }
+    }
+    if (chatter.bits==Config.bitGiftAmount) {
+      let x = (chatter.message).split("give ")[1];
+      generalCmd(Gifts[x]);
     }
   })
 })
