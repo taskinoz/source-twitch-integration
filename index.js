@@ -24,16 +24,14 @@ const Bot = new TwitchBot({
 // Find the commands in the commands.json
 const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
 const Gifts = JSON.parse(fs.readFileSync('gifts.json', 'utf8'));
-// Bind the reset command
-setTimeout(function() {
-  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resCMD ${Commands.reset}")`)
-},100);
-setTimeout(function() {
-  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("alias resMVM ${Commands.resetMV}")`)
-},200);
-setTimeout(function() {
-  fs.writeFileSync(pipe, `CGetLocalClientPlayer().ClientCommand("bind ${Config.resetKey} resCMD;resMVM;")`)
-},300);
+function freeGift() {
+  freeVote="";
+
+}
+setInterval(function() {
+  freeGift();
+  Bot.say("Free gift command !claim");
+},(Config.freeBitGiftInterval).split("s")[0]*1000);
 // FOV SCALE
 // 1.55 - 110
 // 1.42003 - 100
@@ -248,6 +246,14 @@ Bot.on('join', () => {
     if (chatter.bits==Config.bitGiftAmount) {
       let x = (chatter.message).split("give ")[1];
       generalCmd(Gifts[x]);
+    }
+    if ((chatter.message).includes("!give") && chatter.username==freeVote) {
+      let x = (chatter.message).split("give ")[1];
+      generalCmd(Gifts[x]);
+      freeVote="";
+    }
+    if ((chatter.message).includes("!claim") && freeVote=="") {
+      freeVote=chatter.username;
     }
   })
 })
