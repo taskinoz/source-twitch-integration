@@ -3,5 +3,5 @@
   "playTime":   "60",
   "enableGifts": true,
   "bitGiftAmount": 10,
-  "resetKey": "l"
+  "freeBitGiftInterval": "120s"
 }
