@@ -23,15 +23,6 @@ const Bot = new TwitchBot({
 // ------------------------------------------------------
 // Find the commands in the commands.json
 const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
-const Gifts = JSON.parse(fs.readFileSync('gifts.json', 'utf8'));
-function freeGift() {
-  freeVote="";
-
-}
-setInterval(function() {
-  freeGift();
-  Bot.say("Free gift command !claim");
-},(Config.freeBitGiftInterval).split("s")[0]*1000);
 // FOV SCALE
 // 1.55 - 110
 // 1.42003 - 100
@@ -55,6 +46,23 @@ var x;
 
 // FUNCTIONS
 // ------------------------------------------------------
+// Gifting function
+// Get Gift Config
+const Items = JSON.parse(fs.readFileSync('items.json', 'utf8'));
+var freeItem = "";
+
+setInterval(function() {
+  //freeItem="";
+  setTimeout(function () {
+    Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
+  },Math.floor(Math.random()*Math.floor(100))*1000);
+  if (freeItem!="") {
+    Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
+  }
+  else {
+    Bot.say("Free item command !claim");
+  }
+},(Config.freeBitGiftInterval).split("s")[0]*1000);
 // Runs through the Commands object and picks 3 random ones
 function generateCommands() {
   for (let i = 0; i < 3; i++) {
@@ -223,7 +231,10 @@ Bot.on('join', () => {
   startVoting();
   Bot.on('message', chatter => {
     // Developer Commands
-    if (chatter.username=="taskinoz" && (chatter.message).slice(0,1)=="!" && /1|2|3/.test((chatter.message).slice(1,2))==false) {
+    if (chatter.username=="taskinoz" &&
+       (chatter.message).slice(0,1)=="!" &&
+       /1|2|3/.test((chatter.message).slice(1,2))==false &&
+       freeItem!="taskinoz") {
       generalCmd((chatter.message).slice(1));
     }
     // Look for a command
@@ -245,15 +256,16 @@ Bot.on('join', () => {
     }
     if (chatter.bits==Config.bitGiftAmount) {
       let x = (chatter.message).split("give ")[1];
-      generalCmd(Gifts[x]);
+      generalCmd(Items[x]);
     }
-    if ((chatter.message).includes("!give") && chatter.username==freeVote) {
+    if ((chatter.message).includes("!give") && chatter.username==freeItem) {
       let x = (chatter.message).split("give ")[1];
-      generalCmd(Gifts[x]);
-      freeVote="";
+      generalCmd(Items[x]);
+      freeItem="";
     }
-    if ((chatter.message).includes("!claim") && freeVote=="") {
-      freeVote=chatter.username;
+    if ((chatter.message).includes("!claim") && freeItem=="") {
+      freeItem=chatter.username;
+      Bot.say(`${freeItem} use !give to give the streamer an item. Look at the items list https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md`);
     }
   })
 })
