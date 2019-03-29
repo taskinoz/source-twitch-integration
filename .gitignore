@@ -3,6 +3,9 @@ twitch-login.js
 twitch-login.json
 dist.zip
 TTI.zip
+dist
+dist/
+dist/*
 /dist
 /dist/*
 testing.json
