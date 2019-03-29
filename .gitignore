@@ -4,4 +4,5 @@ twitch-login.json
 dist.zip
 TTI.zip
 /dist
+/dist/*
 testing.json
