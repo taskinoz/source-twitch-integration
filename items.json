@@ -13,6 +13,5 @@
   "eva":"give mp_weapon_shotgun",
   "kraber":"give mp_weapon_sniper",
   "wingman":"give mp_weapon_wingman",
-  "r201":"give mp_weapon_rspn101",
-  "car":"give mp_weapon_car"
+  "r201":"give mp_weapon_rspn101"
 }
