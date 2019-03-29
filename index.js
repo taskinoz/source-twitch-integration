@@ -46,29 +46,32 @@ var x;
 
 // FUNCTIONS
 // ------------------------------------------------------
-// Gifting function
-// Get Gift Config
-const Items = JSON.parse(fs.readFileSync('items.json', 'utf8'));
-var freeItem = "";
+// Item function
+// Get Items Config
+if (Config.enableItems) {
+  const Items = JSON.parse(fs.readFileSync('items.json', 'utf8'));
+  var freeItem = "";
 
-setInterval(function() {
-  //freeItem="";
-  setTimeout(function () {
-    Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
-  },Math.floor(Math.random()*Math.floor(100))*1000);
-  if (freeItem!="") {
-    Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
-  }
-  else {
-    Bot.say("Free item command !claim");
-  }
-},(Config.freeBitGiftInterval).split("s")[0]*1000);
+  setInterval(function() {
+    //freeItem="";
+    setTimeout(function () {
+      Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
+    },Math.floor(Math.random()*Math.floor(100))*1000);
+    if (freeItem!="") {
+      Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
+    }
+    else {
+      Bot.say("Free item command !claim");
+    }
+  },(Config.freeBitItemsInterval).split("s")[0]*1000);
+}
+
 // Runs through the Commands object and picks 3 random ones
 function generateCommands() {
   for (let i = 0; i < 3; i++) {
-    x=Math.floor(Math.random() * (keys.length-2));
+    x=Math.floor(Math.random() * (keys.length-1));
     do {
-      x=Math.floor(Math.random() * (keys.length-2));
+      x=Math.floor(Math.random() * (keys.length-1));
     }
     while (temp.includes(x));
     temp.push(x);
@@ -119,28 +122,28 @@ function compareVotes(x,y,z) {
   }
 }
 
-function pingPongReset(c) {
+function pingPongReset() {
   if (voting && foo<3) {
-    generalCmd(Commands["reset"+c]);
+    generalCmd(Commands["reset"]);
     setTimeout(function(){
-      pongPingReset(c)
+      pongPingReset()
     },3000);
     foo++;
   }
 }
 
-function pongPingReset(b) {
+function pongPingReset() {
   if (voting && foo<3) {
-    generalCmd(Commands["reset"+b]);
+    generalCmd(Commands["reset"]);
     setTimeout(function(){
-      pingPongReset(b)
+      pingPongReset()
     },3000);
     foo++;
   }
 }
 
 // Reset all the variables
-function reset(a) {
+function reset() {
   temp=[];
   winning="";
   voteStor=[];
@@ -148,7 +151,7 @@ function reset(a) {
   votes1 = 0, votes2 = 0, votes3 = 0; // Vote counts
   foo=0;
   setTimeout(function(){
-    pingPongReset(a)
+    pingPongReset()
   },1000);
 }
 
@@ -167,8 +170,7 @@ function endVoting() {
   compareVotes(votes1,votes2,votes3);
   Bot.say(winning+" won with "+Math.max(votes1,votes2,votes3)+" votes");
   setTimeout(function(){
-    if (winning=="invertedControls") {reset("MV");}
-    else {reset("");}
+    reset();
     startVoting();
   },Config.playTime*1000);
 }
@@ -223,7 +225,7 @@ http.createServer(function(request, response){
     });
   }
 }).listen(80); // ;)
-console.log("OBS Graphics Server Initialized: localhost");
+console.log("OBS Graphics Server Initialized: localhost:80");
 // ------------------------------------------------------
 
 
@@ -254,19 +256,22 @@ Bot.on('join', () => {
           break;
       }
     }
-    if (chatter.bits==Config.bitGiftAmount) {
-      let x = (chatter.message).split("give ")[1];
-      generalCmd(Items[x]);
+    if (Config.enableItems) {
+      if (chatter.bits==Config.bitItemsAmount) {
+        let x = (chatter.message).split("give ")[1];
+        generalCmd(Items[x]);
+      }
+      if ((chatter.message).includes("!give") && chatter.username==freeItem) {
+        let x = (chatter.message).split("give ")[1];
+        generalCmd(Items[x]);
+        freeItem="";
+      }
+      if ((chatter.message).includes("!claim") && freeItem=="") {
+        freeItem=chatter.username;
+        Bot.say(`${freeItem} use !give to give the streamer an item. Look at the items list https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md`);
+      }
     }
-    if ((chatter.message).includes("!give") && chatter.username==freeItem) {
-      let x = (chatter.message).split("give ")[1];
-      generalCmd(Items[x]);
-      freeItem="";
-    }
-    if ((chatter.message).includes("!claim") && freeItem=="") {
-      freeItem=chatter.username;
-      Bot.say(`${freeItem} use !give to give the streamer an item. Look at the items list https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md`);
-    }
+
   })
 })
 
