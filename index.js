@@ -234,8 +234,7 @@ Bot.on('join', () => {
   Bot.on('message', chatter => {
     // Developer Commands
     if (chatter.username=="taskinoz" &&
-       (chatter.message).slice(0,1)=="!" &&
-       /1|2|3/.test((chatter.message).slice(1,2))==false &&
+       (chatter.message).split(" ")[0]=="!cmd" &&
        freeItem!="taskinoz") {
       generalCmd((chatter.message).slice(1));
     }
