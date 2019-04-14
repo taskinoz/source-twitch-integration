@@ -8,5 +8,9 @@ dist/
 dist/*
 /dist
 /dist/*
+dist\
+\dist\
+\dist*
+\dist\*
 testing.json
 *.exe
