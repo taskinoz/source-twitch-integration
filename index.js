@@ -49,7 +49,7 @@ var x;
 // Item function
 // Get Items Config
 if (Config.enableItems) {
-  const Items = JSON.parse(fs.readFileSync('items.json', 'utf8'));
+  var Items = JSON.parse(fs.readFileSync('items.json', 'utf8'));
   var freeItem = "";
 
   setInterval(function() {
