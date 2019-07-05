@@ -1,7 +1,0 @@
-{
-  "votingTime": "30",
-  "playTime":   "60",
-  "enableItems": true,
-  "bitItemsAmount": 10,
-  "freeBitItemsInterval": "120s"
-}

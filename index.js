@@ -4,9 +4,15 @@ const TwitchBot = require('twitch-bot'); // https://github.com/kritzware/twitch-
 var fs = require('fs');
 var http = require('http');
 var url = require('url');
-const pipe = '\\\\.\\pipe\\TTF2SDK'; // Titanfall Pipe
 const Login = JSON.parse(fs.readFileSync('twitch-login.json', 'utf8'));
-const Config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+const Config = require('./config.js');
+// Pipe Config
+if (Config.game == "tfall2") {
+  var pipe = '\\\\.\\pipe\\TTF2SDK'; // Titanfall Pipe
+}
+else {
+  var pipe = '\\\\.\\pipe\\SourceCommands'; // Source Games Pipe
+}
 // ------------------------------------------------------
 
 //TWITCH CONFIG
@@ -19,16 +25,13 @@ const Bot = new TwitchBot({
 })
 // ------------------------------------------------------
 
-// TITANFALL COMMANDS
+// GAME COMMANDS
 // ------------------------------------------------------
 // Find the commands in the commands.json
-const Commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
-// FOV SCALE
-// 1.55 - 110
-// 1.42003 - 100
-// 1.28442 - 90
-// 1.13185 - 80
-// 1 - 70
+const CommandFile = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
+const Commands = CommandFile[Config.game];
+console.log(Commands);
+
 // ------------------------------------------------------
 
 // FLAGS AND VARIABLES
@@ -48,7 +51,7 @@ var x;
 // ------------------------------------------------------
 // Item function
 // Get Items Config
-if (Config.enableItems) {
+if (Config.enableItems && Config.game=="tfall2") {
   var Items = JSON.parse(fs.readFileSync('items.json', 'utf8'));
   var freeItem = "";
 
@@ -89,6 +92,11 @@ function sayCommands() {
   Bot.say("!3 - "+voteStor[2][1]);
 }
 
+// Write commands to Source games
+function sourceCmd(a) {
+  fs.writeFileSync(pipe, a);
+}
+
 // Run a command in Titanfall
 function generalCmd(a) {
   fs.writeFileSync(pipe, 'CGetLocalClientPlayer().ClientCommand("'+a+'")');
@@ -109,12 +117,19 @@ function compareVotes(x,y,z) {
     if (tempCounting[i]==Math.max(x,y,z)){
       // Futureproofing for using movement commands like +jump
       if ((voteStor[i][0]).includes("+") || (voteStor[i][0]).includes("-")){
-        movementCmd(Commands[keys[temp[i]]][0]);
+        if (Cotfig.game=="tfall2") {
+          movementCmd(Commands[keys[temp[i]]][0]);
+        }
         winning = voteStor[i][1];
         return voteStor[i][1];
       }
       else {
-        generalCmd(Commands[keys[temp[i]]][0]);
+        if (Config.game=="tfall2") {
+          generalCmd(Commands[keys[temp[i]]][0]);
+        }
+        else {
+          sourceCmd(Commands[keys[temp[i]]][0]);
+        }
         winning = voteStor[i][1];
         return voteStor[i][1];
       }
@@ -124,7 +139,12 @@ function compareVotes(x,y,z) {
 
 function pingPongReset() {
   if (voting && foo<3) {
-    generalCmd(Commands["reset"]);
+    if (Config.game=="tfall2") {
+      generalCmd(Commands["reset"]);
+    }
+    else {
+      sourceCmd(Commands["reset"]);
+    }
     setTimeout(function(){
       pongPingReset()
     },3000);
@@ -134,7 +154,12 @@ function pingPongReset() {
 
 function pongPingReset() {
   if (voting && foo<3) {
-    generalCmd(Commands["reset"]);
+    if (Config.game=="tfall2") {
+      generalCmd(Commands["reset"]);
+    }
+    else {
+      sourceCmd(Commands["reset"]);
+    }
     setTimeout(function(){
       pingPongReset()
     },3000);
