@@ -16,13 +16,20 @@
     "reset": "firstperson;thirdperson_mayamode 0;thirdperson_screenspace 0;host_timescale 1;sp_difficulty 0;m_invert_pitch 0;sv_gravity 750;cl_fovScale 1.42003;wallrun_enable 1;"
   },
   "pt":{
-    "lowGravity": ["sv_gravity 300", "Low Gravity"],
+    "lowGravity": ["sv_gravity 100", "Low Gravity"],
     "highGravity": ["sv_gravity 2000", "High Gravity"],
     "killPlayer": ["kill", "Kill Player"],
     "slowmoSpeed": ["host_timescale 0.5", "Slowmo"],
     "doubleSpeed": ["host_timescale 2", "Fast Forward"],
     "turboSpeed": ["host_timescale 5", "Turbo Speed"],
-    "reset": "sv_gravity 700;host_timescale 1;"
+    "dodgeBall": ["fire_energy_ball;wait 2000;fire_energy_ball;wait 2000;fire_energy_ball;", "Dodgeball"],
+    "thirdPerson": ["thirdperson", "Third Person Camera"],
+    "blindMode": ["r_farz 1;gl_clear 1;wait 2000;r_farz -1;wait 2000;r_farz 1;wait 2000;r_farz -1;wait 2000;r_farz 1;wait 2000;r_farz -1;r_farz 1;", "Blind Mode"],
+    "wallHax": ["r_drawworld 0;gl_clear 1", "Wall Hax"],
+    "noCrosshair": ["crosshair 0", "No Crosshair"],
+    "hairball": ["CreateHairball", "Hairball"],
+    "portalsAnywhere": ["sv_portal_placement_never_fail 1", "Portals Anywhere"],
+    "reset": "sv_gravity 600;host_timescale 1;firstperson;sv_portal_placement_never_fail 0;r_drawworld 1;gl_clear 0;r_farz -1;crosshair 1;"
   },
   "hl2":{
     "lowGravity": ["sv_gravity 300", "Low Gravity"],
