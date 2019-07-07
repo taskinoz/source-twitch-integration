@@ -30,7 +30,7 @@ const Bot = new TwitchBot({
 // Find the commands in the commands.json
 const CommandFile = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
 const Commands = CommandFile[Config.game];
-console.log(Commands);
+//console.log(Commands);
 
 // ------------------------------------------------------
 
