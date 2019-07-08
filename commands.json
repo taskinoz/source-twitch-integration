@@ -30,6 +30,7 @@
     "hairball": ["CreateHairball", "Hairball"],
     "portalsAnywhere": ["sv_portal_placement_never_fail 1", "Portals Anywhere"],
     "ignitePlayer": ["ent_fire !self ignite;ent_fire !self ignitelifetime 30", "Ignite Player"],
+    "createAirboat":["impulse 83","Create Airboat"],
     "reset": "sv_gravity 600;host_timescale 1;firstperson;sv_portal_placement_never_fail 0;r_drawworld 1;gl_clear 0;r_farz -1;crosshair 1;ent_fire !self ignitelifetime 0;"
   },
   "hl2":{
