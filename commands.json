@@ -8,6 +8,7 @@
     "difficultyHard": ["sp_difficulty 2", "Hard Difficulty"],
     "difficultyMaster": ["sp_difficulty 3", "Master Difficulty"],
     "lastCheckpoint": ["load savegame", "Load Last Checkpoint"],
+    "killPlayer": ["ent_fire !self sethealth 0", "Kill Player"],
     "slowmoSpeed": ["host_timescale 0.5", "Slowmo"],
     "doubleSpeed": ["host_timescale 2", "Fast Forward"],
     "turboSpeed": ["host_timescale 5", "Turbo Speed"],
