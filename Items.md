@@ -17,7 +17,7 @@ Without Bits:
 |brute|The gun loadout from Brute|
 |ion|The gun loadout from Ion|
 |ronin|The gun loadout from Ronin|
-|northstar|Thegun loadout from Northstar|
+|northstar|The gun loadout from Northstar|
 |legion|The gun loadout from Legion|
 |hover|The Hover ability from the Brute loadout|
 |dash|The Phase Dash ability from the Ronin loadout|
