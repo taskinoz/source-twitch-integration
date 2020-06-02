@@ -1,5 +1,5 @@
 module.exports = {
-  game: "pt",
+  game: "tfall2",
   votingTime: "30",
   playTime:   "60",
   enableItems: true,
