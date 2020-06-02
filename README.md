@@ -1,13 +1,13 @@
-<p align="center" style="text-align:center"><img width="130" height="150" src="https://raw.githubusercontent.com/taskinoz/titanfall-twitch-integration/master/icon/TitanfallTwitchIntegration-white.png" alt="Titanfall Twitch Integration" /></p>
+<p align="center" style="text-align:center"><img width="130" height="150" src="https://raw.githubusercontent.com/taskinoz/source-twitch-integration/master/icon/SourceTwitchIntegration.png" alt="Source Twitch Integration" /></p>
 
-# Titanfall Twitch Integration
+# Source Twitch Integration
 
 Using Twitch chat and Icepick to dynamically change the gameplay in Titanfall 2
 
 ## Installation
 
 - Download Icepick [here](https://titanfallmods.com)
-- Download the latest release of Titanfall Twitch Integration from [here](https://github.com/taskinoz/titanfall-twitch-integration/releases/)
+- Download the latest release of Titanfall Twitch Integration from [here](https://github.com/taskinoz/source-twitch-integration/releases/)
 - Add your username, oath key and channel name to the ``twitch-login.example.json`` and rename it to ``twitch-login.json``. **Get your OATH key [here](https://twitchapps.com/tmi/)**
 - Change the voting times in ``config.json`` if needed (Default is 30s for voting and 60s for playtime)
 - Patch Icepick by moving the DLL from ``\patch\TTF2SDK.dll`` (Thanks McSimp) into the Icepick folder, replacing the `TTF2SDK.dll` that was already there
@@ -22,7 +22,7 @@ Using Twitch chat and Icepick to dynamically change the gameplay in Titanfall 2
 - Remove the CSS unless you want to change some of the styles and colors.
 - Additionally you can check `Refresh browser when scene becomes active`
 
-![OBS Screenshot](https://raw.githubusercontent.com/taskinoz/titanfall-twitch-integration/master/setup/OBSScreenshot.png)
+![OBS Screenshot](https://raw.githubusercontent.com/taskinoz/source-twitch-integration/master/setup/OBSScreenshot.png)
 
 ## Bugs & Issues
 
