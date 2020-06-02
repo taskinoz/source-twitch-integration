@@ -58,10 +58,10 @@ if (Config.enableItems && Config.game=="tfall2") {
   setInterval(function() {
     //freeItem="";
     setTimeout(function () {
-      Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
+      Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/source-twitch-integration/blob/master/Items.md");
     },Math.floor(Math.random()*Math.floor(100))*1000);
     if (freeItem!="") {
-      Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md");
+      Bot.say("Find out how to give the streamer items - https://github.com/taskinoz/source-twitch-integration/blob/master/Items.md");
     }
     else {
       Bot.say("Free item command !claim");
@@ -292,7 +292,7 @@ Bot.on('join', () => {
       }
       if ((chatter.message).includes("!claim") && freeItem=="") {
         freeItem=chatter.username;
-        Bot.say(`${freeItem} use !give to give the streamer an item. Look at the items list https://github.com/taskinoz/titanfall-twitch-integration/blob/master/Items.md`);
+        Bot.say(`${freeItem} use !give to give the streamer an item. Look at the items list https://github.com/taskinoz/source-twitch-integration/blob/master/Items.md`);
       }
     }
 
