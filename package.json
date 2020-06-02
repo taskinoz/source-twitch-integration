@@ -29,9 +29,9 @@
     "url": "^0.11.0"
   },
   "dependencies": {
-    "pkg": "^4.4.4"
+    "pkg": "^4.4.8"
   },
-  "bin":"./index.js",
+  "bin": "./index.js",
   "pkg": {
     "scripts": "lib/*",
     "assets": "views/**/*"
