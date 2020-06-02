@@ -1,4 +1,4 @@
-<p align="center" style="text-align:center"><img width="130" height="150" src="https://raw.githubusercontent.com/taskinoz/source-twitch-integration/master/icon/SourceTwitchIntegration.png" alt="Source Twitch Integration" /></p>
+<p align="center" style="text-align:center"><img width="150" height="150" src="https://raw.githubusercontent.com/taskinoz/source-twitch-integration/master/icon/SourceTwitchIntegration.png" alt="Source Twitch Integration" /></p>
 
 # Source Twitch Integration
 
