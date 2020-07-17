@@ -117,7 +117,7 @@ function compareVotes(x,y,z) {
     if (tempCounting[i]==Math.max(x,y,z)){
       // Futureproofing for using movement commands like +jump
       if ((voteStor[i][0]).includes("+") || (voteStor[i][0]).includes("-")){
-        if (Cotfig.game=="tfall2") {
+        if (Config.game=="tfall2") {
           movementCmd(Commands[keys[temp[i]]][0]);
         }
         winning = voteStor[i][1];
