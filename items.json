@@ -13,5 +13,7 @@
   "eva":"give mp_weapon_shotgun",
   "kraber":"give mp_weapon_sniper",
   "wingman":"give mp_weapon_wingman",
-  "r201":"give mp_weapon_rspn101"
+  "r201":"give mp_weapon_rspn101",
+  "swarm":"ent_create npc_frag_drone;ent_create npc_frag_drone;ent_create npc_frag_drone;ent_create npc_frag_drone;ent_create npc_frag_drone;",
+  "nogun":"impulse 200"
 }
