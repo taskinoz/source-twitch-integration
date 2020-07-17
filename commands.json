@@ -12,9 +12,10 @@
     "slowmoSpeed": ["host_timescale 0.5", "Slowmo"],
     "doubleSpeed": ["host_timescale 2", "Fast Forward"],
     "turboSpeed": ["host_timescale 5", "Turbo Speed"],
-    "thirdPerson": ["thirdperson; thirdperson_mayamode 1; thirdperson_screenspace 1", "Third Person Camera"],
+    "thirdPerson": ["thirdperson; thirdperson_screenspace 1", "Third Person Camera"],
     "wallrunningOff": ["wallrun_enable 0", "Disable Wallrunning"],
-    "reset": "firstperson;thirdperson_mayamode 0;thirdperson_screenspace 0;host_timescale 1;sp_difficulty 0;m_invert_pitch 0;sv_gravity 750;cl_fovScale 1.42003;wallrun_enable 1;"
+	"blurScreen": ["dof_overrideParams 1;dof_nearDepthStart 1;dof_nearDepthEnd 3000;dof_farDepthStart 1","Blur Screen"],
+    "reset": "firstperson;thirdperson_mayamode 0;thirdperson_screenspace 0;host_timescale 1;sp_difficulty 0;m_invert_pitch 0;sv_gravity 750;cl_fovScale 1.42003;wallrun_enable 1;dof_overrideParams 0;dof_nearDepthStart 7.5;dof_nearDepthEnd 7.7;dof_farDepthStart 2000;dof_farDepthEnd 30000"
   },
   "pt":{
     "lowGravity": ["sv_gravity 100", "Low Gravity"],
