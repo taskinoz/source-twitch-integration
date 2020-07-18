@@ -26,3 +26,5 @@ Without Bits:
 |kraber|Give the streamer a Kraber Sniper|
 |wingman|Give the streamer a Wingman Handgun|
 |r201|Give the streamer a R-201 Assault Rifle|
+|swarm|Creat a swarm of ticks wherever the player is looking|
+|nogun|Hide the gun|
