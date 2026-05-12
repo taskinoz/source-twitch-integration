@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "node build.js && pkg --targets node12-win-x64 package.json --output ./SourceTwitchIntegration.exe"
+    "build": "echo Build with Bun in the future"
   },
   "repository": {
     "type": "git",
@@ -23,13 +23,7 @@
   },
   "homepage": "https://gitlab.com/taskinoz/titanfall-twitch-integration#readme",
   "devDependencies": {
-    "fs": "0.0.1-security",
-    "http": "0.0.0",
-    "twitch-bot": "^1.3.5",
-    "url": "^0.11.0"
-  },
-  "dependencies": {
-    "pkg": "^4.4.8"
+    "twitch-bot": "^1.3.5"
   },
   "bin": "./index.js",
   "pkg": {

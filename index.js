@@ -3,7 +3,6 @@
 const TwitchBot = require('twitch-bot'); // https://github.com/kritzware/twitch-bot
 var fs = require('fs');
 var http = require('http');
-var url = require('url');
 const Login = JSON.parse(fs.readFileSync('twitch-login.json', 'utf8'));
 const Config = require('./config.js');
 // Pipe Config
@@ -207,7 +206,7 @@ function endVoting() {
 // https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/
 
 http.createServer(function(request, response){
-  var path = url.parse(request.url).pathname;
+  var path = new URL(request.url, `http://${request.headers.host}`).pathname;
   if(path=="/getstring"){
     if (voting){
       var obsGraphics = {
