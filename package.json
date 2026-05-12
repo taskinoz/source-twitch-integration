@@ -29,7 +29,7 @@
     "url": "^0.11.0"
   },
   "dependencies": {
-    "pkg": "^4.4.8"
+    "pkg": "^5.8.1"
   },
   "bin": "./index.js",
   "pkg": {
